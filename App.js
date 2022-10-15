@@ -45,7 +45,7 @@ export default function App() {
 
   return (
     <NativeBaseProvider theme={theme}>
-      {loading && fontsLoaded ? <InitialLoadingPage /> : <Home />}
+      {loading && !fontsLoaded ? <InitialLoadingPage /> : <Home />}
     </NativeBaseProvider>
   );
 }
