@@ -1,8 +1,11 @@
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 import { extendTheme, NativeBaseProvider } from "native-base";
 import { useEffect, useState } from "react";
 import Home from "./pages/Home";
 import InitialLoadingPage from "./pages/InitialLoadingPage";
+import News from "./pages/News";
 
 const theme = extendTheme({
   fontConfig: {
@@ -27,6 +30,8 @@ const theme = extendTheme({
   },
 });
 
+const Stack = createNativeStackNavigator();
+
 export default function App() {
   const [fontsLoaded] = useFonts({
     "Montserrat-Regular": require("./assets/fonts/Montserrat-Regular.ttf"),
@@ -45,7 +50,33 @@ export default function App() {
 
   return (
     <NativeBaseProvider theme={theme}>
-      {loading && !fontsLoaded ? <InitialLoadingPage /> : <Home />}
+      {loading && !fontsLoaded ? (
+        <InitialLoadingPage />
+      ) : (
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+            }}
+            initialRouteName="Home"
+          >
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              options={{
+                title: "Home",
+              }}
+            />
+            <Stack.Screen
+              name="News"
+              component={News}
+              options={{
+                title: "News",
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      )}
     </NativeBaseProvider>
   );
 }

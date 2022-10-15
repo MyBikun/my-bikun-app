@@ -3,11 +3,11 @@ import { useState } from "react";
 import NewsCard from "../components/NewsCard";
 import Wrapper from "../components/Wrapper";
 
-const Home = () => {
+const Home = (props) => {
   const [jalur, setJalur] = useState("");
 
   return (
-    <Wrapper>
+    <Wrapper {...props}>
       <Heading color="yellow.500">Lacak Bikun</Heading>
       <Card backgroundColor="white" mt="4">
         <Select
@@ -37,7 +37,10 @@ const Home = () => {
         justifyContent="space-between"
       >
         <Heading color="yellow.500">Berita</Heading>
-        <Button backgroundColor="darkBlue.50">
+        <Button
+          backgroundColor="darkBlue.50"
+          onPress={() => props.navigation.push("News")}
+        >
           <Text fontWeight="medium" color="darkBlue.600">
             Lebih Banyak
           </Text>
