@@ -1,7 +1,8 @@
-import { NativeBaseProvider, extendTheme, Text } from "native-base";
-import InitialLoadingPage from "./components/InitialLoadingPage";
 import { useFonts } from "expo-font";
+import { extendTheme, NativeBaseProvider } from "native-base";
 import { useEffect, useState } from "react";
+import Home from "./pages/Home";
+import InitialLoadingPage from "./pages/InitialLoadingPage";
 
 const theme = extendTheme({
   fontConfig: {
@@ -27,7 +28,7 @@ const theme = extendTheme({
 });
 
 export default function App() {
-  const _ = useFonts({
+  const [fontsLoaded] = useFonts({
     "Montserrat-Regular": require("./assets/fonts/Montserrat-Regular.ttf"),
     "Montserrat-Medium": require("./assets/fonts/Montserrat-Medium.ttf"),
     "Montserrat-Bold": require("./assets/fonts/Montserrat-Bold.ttf"),
@@ -44,7 +45,7 @@ export default function App() {
 
   return (
     <NativeBaseProvider theme={theme}>
-      {loading ? <InitialLoadingPage /> : <Text>Loaded</Text>}
+      {loading && fontsLoaded ? <InitialLoadingPage /> : <Home />}
     </NativeBaseProvider>
   );
 }
