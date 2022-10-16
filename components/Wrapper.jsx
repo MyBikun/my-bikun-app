@@ -3,6 +3,7 @@ import {
   Box,
   Flex,
   Heading,
+  KeyboardAvoidingView,
   Pressable,
   ScrollView,
   StatusBar,
@@ -64,9 +65,11 @@ const Wrapper = ({ children, route, navigation, bottomButton, noPadding }) => {
         {children}
         <Box safeAreaBottom h="16" />
       </ScrollView>
-      <Flex px="8" alignItems="center" position="absolute" bottom="12" w="full">
-        {bottomButton}
-      </Flex>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <Box>{bottomButton}</Box>
+      </KeyboardAvoidingView>
     </>
   );
 };

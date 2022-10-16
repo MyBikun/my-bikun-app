@@ -7,13 +7,23 @@ import {
   VStack,
   WarningOutlineIcon,
 } from "native-base";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Wrapper from "../components/Wrapper";
+import { ROLE } from "../constants";
+import { AuthContext } from "../contexts/AuthContext";
 
-const LogInButton = () => {
+const LogInButton = ({ onPress }) => {
   return (
-    <Button backgroundColor="yellow.500" w="full" shadow="4">
-      Log In
+    <Button
+      onPress={onPress}
+      backgroundColor="yellow.500"
+      shadow="4"
+      mx="8"
+      mb="8"
+    >
+      <Text fontSize="md" fontWeight="medium" color="white">
+        Log In
+      </Text>
     </Button>
   );
 };
@@ -21,9 +31,31 @@ const LogInButton = () => {
 const LogIn = ({ ...props }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorUsername, setErrorUsername] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
+
+  const authContext = useContext(AuthContext);
+
+  const onSubmit = () => {
+    username === ""
+      ? setErrorUsername("Username tidak boleh kosong")
+      : setErrorUsername("");
+    password === ""
+      ? setErrorPassword("Password tidak boleh kosong")
+      : setErrorPassword("");
+
+    if (username !== "" && password !== "") {
+      if (username === "admin") {
+        authContext.setRole(ROLE.ADMIN);
+      } else {
+        authContext.setRole(ROLE.DRIVER);
+      }
+      props.navigation.navigate("Home");
+    }
+  };
 
   return (
-    <Wrapper {...props} bottomButton={<LogInButton />}>
+    <Wrapper {...props} bottomButton={<LogInButton onPress={onSubmit} />}>
       <Flex direction="row">
         <Text fontWeight="medium" fontSize="md">
           Masuk Sebagai{" "}
@@ -39,19 +71,20 @@ const LogIn = ({ ...props }) => {
         </Text>
       </Flex>
       <VStack w="full" space="4" mt="8">
-        <FormControl isInvalid={false}>
+        <FormControl isInvalid={!!errorUsername}>
           <FormControl.Label>Username</FormControl.Label>
           <Input
             placeholder="Masukkan username"
             value={username}
             onChange={(e) => setUsername(e.nativeEvent.text)}
             backgroundColor="white"
+            borderColor={!!errorUsername ? "red.500" : "gray.200"}
           />
           <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-            Try different from previous passwords.
+            {errorUsername}
           </FormControl.ErrorMessage>
         </FormControl>
-        <FormControl isInvalid={false}>
+        <FormControl isInvalid={!!errorPassword}>
           <FormControl.Label>Password</FormControl.Label>
           <Input
             placeholder="Masukkan password"
@@ -59,9 +92,10 @@ const LogIn = ({ ...props }) => {
             value={password}
             onChange={(e) => setPassword(e.nativeEvent.text)}
             backgroundColor="white"
+            borderColor={!!errorPassword ? "red.500" : "gray.200"}
           />
           <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-            Try different from previous passwords.
+            {errorPassword}
           </FormControl.ErrorMessage>
         </FormControl>
       </VStack>
