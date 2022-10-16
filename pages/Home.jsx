@@ -47,12 +47,12 @@ const Home = (props) => {
         </Button>
       </Flex>
       <VStack space="2" mt="4">
-        <NewsCard />
-        <NewsCard />
-        <NewsCard />
-        <NewsCard />
-        <NewsCard />
-        <NewsCard />
+        <NewsCard id="1" {...props} />
+        <NewsCard id="1" {...props} />
+        <NewsCard id="1" {...props} />
+        <NewsCard id="1" {...props} />
+        <NewsCard id="1" {...props} />
+        <NewsCard id="1" {...props} />
       </VStack>
     </Wrapper>
   );

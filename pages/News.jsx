@@ -4,11 +4,11 @@ import Wrapper from "../components/Wrapper";
 const News = (props) => {
   return (
     <Wrapper {...props}>
-      <NewsCard />
-      <NewsCard />
-      <NewsCard />
-      <NewsCard />
-      <NewsCard />
+      <NewsCard id="1" {...props} />
+      <NewsCard id="1" {...props} />
+      <NewsCard id="1" {...props} />
+      <NewsCard id="1" {...props} />
+      <NewsCard id="1" {...props} />
     </Wrapper>
   );
 };

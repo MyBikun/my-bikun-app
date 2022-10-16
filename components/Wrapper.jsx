@@ -44,7 +44,7 @@ const Wrapper = ({ children, route, navigation }) => {
               size={24}
               onPress={navigation.goBack}
             />
-            <Heading ml="4">{route?.name}</Heading>
+            <Heading ml="4">{route?.params?.title}</Heading>
           </Flex>
         )}
       </Box>

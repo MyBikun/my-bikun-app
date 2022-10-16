@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Home from "./pages/Home";
 import InitialLoadingPage from "./pages/InitialLoadingPage";
 import News from "./pages/News";
+import NewsDetail from "./pages/NewsDetail";
 
 const theme = extendTheme({
   fontConfig: {
@@ -49,11 +50,11 @@ export default function App() {
   }, []);
 
   return (
-    <NativeBaseProvider theme={theme}>
-      {loading && !fontsLoaded ? (
-        <InitialLoadingPage />
-      ) : (
-        <NavigationContainer>
+    <NavigationContainer>
+      <NativeBaseProvider theme={theme}>
+        {loading && !fontsLoaded ? (
+          <InitialLoadingPage />
+        ) : (
           <Stack.Navigator
             screenOptions={{
               headerShown: false,
@@ -63,20 +64,21 @@ export default function App() {
             <Stack.Screen
               name="Home"
               component={Home}
-              options={{
-                title: "Home",
-              }}
+              initialParams={{ title: "Beranda" }}
             />
             <Stack.Screen
               name="News"
               component={News}
-              options={{
-                title: "News",
-              }}
+              initialParams={{ title: "Berita" }}
+            />
+            <Stack.Screen
+              name="NewsDetail"
+              component={NewsDetail}
+              initialParams={{ title: "Berita" }}
             />
           </Stack.Navigator>
-        </NavigationContainer>
-      )}
-    </NativeBaseProvider>
+        )}
+      </NativeBaseProvider>
+    </NavigationContainer>
   );
 }

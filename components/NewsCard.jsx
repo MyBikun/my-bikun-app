@@ -1,8 +1,12 @@
-import { Card, Text } from "native-base";
+import { Button, Text } from "native-base";
 
-const NewsCard = () => {
+const NewsCard = ({ id, ...props }) => {
   return (
-    <Card backgroundColor="white" mb="2">
+    <Button
+      backgroundColor="white"
+      mb="2"
+      onPress={() => props.navigation.push("NewsDetail", { id })}
+    >
       <Text fontWeight="bold" fontSize="lg">
         Title
       </Text>
@@ -14,7 +18,7 @@ const NewsCard = () => {
         repudiandae illo beatae dolores rem ex nisi ab deserunt eius dolore,
         expedita non omnis sequi eaque veritatis dicta, doloribus similique!
       </Text>
-    </Card>
+    </Button>
   );
 };
 
