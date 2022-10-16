@@ -1,7 +1,14 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { Box, Flex, Heading, ScrollView, StatusBar } from "native-base";
+import {
+  Box,
+  Flex,
+  Heading,
+  Pressable,
+  ScrollView,
+  StatusBar,
+} from "native-base";
 
-const Wrapper = ({ children, route, navigation }) => {
+const Wrapper = ({ children, route, navigation, bottomButton }) => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -18,7 +25,9 @@ const Wrapper = ({ children, route, navigation }) => {
             borderWidth="1"
             borderTopWidth="0"
           >
-            <MaterialIcons name="menu" size={32} color="#737373" />
+            <Pressable onPress={navigation.openDrawer}>
+              <MaterialIcons name="menu" size={32} color="#737373" />
+            </Pressable>
             <Flex direction="row" marginLeft="4">
               <Heading fontWeight="extrabold" fontSize="3xl" color="blue.600">
                 My
@@ -52,6 +61,9 @@ const Wrapper = ({ children, route, navigation }) => {
         {children}
         <Box safeAreaBottom h="16" />
       </ScrollView>
+      <Flex px="8" alignItems="center" position="absolute" bottom="12" w="full">
+        {bottomButton}
+      </Flex>
     </>
   );
 };

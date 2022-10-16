@@ -1,3 +1,4 @@
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
@@ -5,6 +6,7 @@ import { extendTheme, NativeBaseProvider } from "native-base";
 import { useEffect, useState } from "react";
 import Home from "./pages/Home";
 import InitialLoadingPage from "./pages/InitialLoadingPage";
+import LogIn from "./pages/LogIn";
 import News from "./pages/News";
 import NewsDetail from "./pages/NewsDetail";
 
@@ -32,6 +34,23 @@ const theme = extendTheme({
 });
 
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+const DrawerScreens = () => (
+  <Drawer.Navigator
+    screenOptions={{
+      headerShown: false,
+    }}
+    initialRouteName="Home"
+  >
+    <Drawer.Screen name="Home" component={Home} />
+    <Drawer.Screen
+      name="LogIn"
+      component={LogIn}
+      initialParams={{ title: "Log In" }}
+    />
+  </Drawer.Navigator>
+);
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -61,11 +80,7 @@ export default function App() {
             }}
             initialRouteName="Home"
           >
-            <Stack.Screen
-              name="Home"
-              component={Home}
-              initialParams={{ title: "Beranda" }}
-            />
+            <Stack.Screen name="Home" component={DrawerScreens} />
             <Stack.Screen
               name="News"
               component={News}
