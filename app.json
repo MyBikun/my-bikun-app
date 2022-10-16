@@ -24,7 +24,8 @@
         "NSPhotoLibraryUsageDescription": "The app accesses your photos to let you pick images for creating an article.",
         "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera",
         "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
-      }
+      },
+      "bundleIdentifier": "Y"
     },
     "android": {
       "adaptiveIcon": {
