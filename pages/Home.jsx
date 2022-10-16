@@ -1,15 +1,24 @@
 import { Entypo } from "@expo/vector-icons";
 import { Box, Button, Card, Flex, Heading, Text, VStack } from "native-base";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import NewsCard from "../components/NewsCard";
 import Wrapper from "../components/Wrapper";
+import { ROLE } from "../constants";
+import { AuthContext } from "../contexts/AuthContext";
 
 const Home = (props) => {
   const [jalur, setJalur] = useState("");
 
+  const { role } = useContext(AuthContext);
+
   return (
     <Wrapper {...props}>
+      <Heading fontSize="xl" mb="4">
+        Selamat Datang,{" "}
+        {role ? (role === ROLE.ADMIN ? "Admin" : "Driver") : "Sahabat Bikun"}!
+        👋
+      </Heading>
       <Heading color="yellow.500">Lacak Bikun</Heading>
       <Card backgroundColor="white" mt="4">
         <Box borderWidth="1" borderColor="muted.300" rounded="sm" p="3">

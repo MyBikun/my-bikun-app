@@ -3,7 +3,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 import { extendTheme, NativeBaseProvider } from "native-base";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import CustomDrawer from "./components/CustomDrawer";
+import { ROLE } from "./constants";
+import { AuthContext, AuthContextProvider } from "./contexts/AuthContext";
+import AddNews from "./pages/AddNews";
 import BikunMaps from "./pages/BikunMaps";
 import Home from "./pages/Home";
 import InitialLoadingPage from "./pages/InitialLoadingPage";
@@ -37,21 +41,36 @@ const theme = extendTheme({
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const DrawerScreens = () => (
-  <Drawer.Navigator
-    screenOptions={{
-      headerShown: false,
-    }}
-    initialRouteName="Home"
-  >
-    <Drawer.Screen name="Home" component={Home} />
-    <Drawer.Screen
-      name="LogIn"
-      component={LogIn}
-      initialParams={{ title: "Log In" }}
-    />
-  </Drawer.Navigator>
-);
+const DrawerScreens = () => {
+  const { role } = useContext(AuthContext);
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      initialRouteName="Home"
+      drawerContent={(props) => <CustomDrawer {...props} />}
+    >
+      <Drawer.Screen name="Home" component={Home} />
+      {!role && (
+        <Drawer.Screen
+          name="LogIn"
+          component={LogIn}
+          initialParams={{ title: "Log In" }}
+          options={{ title: "Log In" }}
+        />
+      )}
+      {role === ROLE.ADMIN && (
+        <Drawer.Screen
+          name="AddNews"
+          component={AddNews}
+          initialParams={{ title: "Buat Berita" }}
+          options={{ title: "Buat Berita" }}
+        />
+      )}
+    </Drawer.Navigator>
+  );
+};
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -72,33 +91,35 @@ export default function App() {
   return (
     <NavigationContainer>
       <NativeBaseProvider theme={theme}>
-        {loading && !fontsLoaded ? (
-          <InitialLoadingPage />
-        ) : (
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-            }}
-            initialRouteName="Drawer"
-          >
-            <Stack.Screen name="Drawer" component={DrawerScreens} />
-            <Stack.Screen
-              name="News"
-              component={News}
-              initialParams={{ title: "Berita" }}
-            />
-            <Stack.Screen
-              name="NewsDetail"
-              component={NewsDetail}
-              initialParams={{ title: "Berita" }}
-            />
-            <Stack.Screen
-              name="BikunMaps"
-              component={BikunMaps}
-              initialParams={{ title: "Lacak Bikun" }}
-            />
-          </Stack.Navigator>
-        )}
+        <AuthContextProvider>
+          {loading && !fontsLoaded ? (
+            <InitialLoadingPage />
+          ) : (
+            <Stack.Navigator
+              screenOptions={{
+                headerShown: false,
+              }}
+              initialRouteName="Drawer"
+            >
+              <Stack.Screen name="Drawer" component={DrawerScreens} />
+              <Stack.Screen
+                name="News"
+                component={News}
+                initialParams={{ title: "Berita" }}
+              />
+              <Stack.Screen
+                name="NewsDetail"
+                component={NewsDetail}
+                initialParams={{ title: "Berita" }}
+              />
+              <Stack.Screen
+                name="BikunMaps"
+                component={BikunMaps}
+                initialParams={{ title: "Lacak Bikun" }}
+              />
+            </Stack.Navigator>
+          )}
+        </AuthContextProvider>
       </NativeBaseProvider>
     </NavigationContainer>
   );
