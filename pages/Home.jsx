@@ -30,7 +30,11 @@ const Home = (props) => {
             ]}
           />
         </Box>
-        <Button backgroundColor="yellow.500" mt="4">
+        <Button
+          backgroundColor="yellow.500"
+          mt="4"
+          onPress={() => props.navigation.push("BikunMaps")}
+        >
           <Text fontWeight="medium" fontSize="md" color="white">
             Lacak
           </Text>

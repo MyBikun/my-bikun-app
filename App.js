@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 import { extendTheme, NativeBaseProvider } from "native-base";
 import { useEffect, useState } from "react";
+import BikunMaps from "./pages/BikunMaps";
 import Home from "./pages/Home";
 import InitialLoadingPage from "./pages/InitialLoadingPage";
 import LogIn from "./pages/LogIn";
@@ -78,9 +79,9 @@ export default function App() {
             screenOptions={{
               headerShown: false,
             }}
-            initialRouteName="Home"
+            initialRouteName="Drawer"
           >
-            <Stack.Screen name="Home" component={DrawerScreens} />
+            <Stack.Screen name="Drawer" component={DrawerScreens} />
             <Stack.Screen
               name="News"
               component={News}
@@ -90,6 +91,11 @@ export default function App() {
               name="NewsDetail"
               component={NewsDetail}
               initialParams={{ title: "Berita" }}
+            />
+            <Stack.Screen
+              name="BikunMaps"
+              component={BikunMaps}
+              initialParams={{ title: "Lacak Bikun" }}
             />
           </Stack.Navigator>
         )}

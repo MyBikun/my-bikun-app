@@ -8,7 +8,7 @@ import {
   StatusBar,
 } from "native-base";
 
-const Wrapper = ({ children, route, navigation, bottomButton }) => {
+const Wrapper = ({ children, route, navigation, bottomButton, noPadding }) => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -57,7 +57,10 @@ const Wrapper = ({ children, route, navigation, bottomButton }) => {
           </Flex>
         )}
       </Box>
-      <ScrollView padding="6" backgroundColor="warmGray.100">
+      <ScrollView
+        padding={noPadding ? "0" : "6"}
+        backgroundColor="warmGray.100"
+      >
         {children}
         <Box safeAreaBottom h="16" />
       </ScrollView>
