@@ -21,7 +21,9 @@ const LogInButton = ({ onPress }) => {
       mx="8"
       mb="8"
     >
-      Log In
+      <Text fontSize="md" fontWeight="medium" color="white">
+        Log In
+      </Text>
     </Button>
   );
 };

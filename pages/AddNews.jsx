@@ -146,7 +146,9 @@ const AddNews = (props) => {
           shadow="4"
           mt="8"
         >
-          Submit
+          <Text fontSize="md" fontWeight="medium" color="white">
+            Submit
+          </Text>
         </Button>
       </KeyboardAvoidingView>
     </Wrapper>

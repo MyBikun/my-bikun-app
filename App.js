@@ -14,6 +14,8 @@ import InitialLoadingPage from "./pages/InitialLoadingPage";
 import LogIn from "./pages/LogIn";
 import News from "./pages/News";
 import NewsDetail from "./pages/NewsDetail";
+import ShareBikunLocation from "./pages/ShareBikunLocation";
+import ShareBikunLocationMaps from "./pages/ShareBikunLocationMaps";
 
 const theme = extendTheme({
   fontConfig: {
@@ -68,6 +70,14 @@ const DrawerScreens = () => {
           options={{ title: "Buat Berita" }}
         />
       )}
+      {role === ROLE.DRIVER && (
+        <Drawer.Screen
+          name="ShareBikunLocation"
+          component={ShareBikunLocation}
+          initialParams={{ title: "Kemudikan Bikun" }}
+          options={{ title: "Kemudikan Bikun" }}
+        />
+      )}
     </Drawer.Navigator>
   );
 };
@@ -116,6 +126,11 @@ export default function App() {
                 name="BikunMaps"
                 component={BikunMaps}
                 initialParams={{ title: "Lacak Bikun" }}
+              />
+              <Stack.Screen
+                name="ShareBikunLocationMaps"
+                component={ShareBikunLocationMaps}
+                initialParams={{ title: "Kemudikan Bikun" }}
               />
             </Stack.Navigator>
           )}
