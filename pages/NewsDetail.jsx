@@ -9,7 +9,7 @@ const NewsDetail = ({ ...props }) => {
       props.navigation.goBack();
       alert("Berita tidak ditemukan");
     }
-  }, [id]);
+  }, [props.route.params.id]);
 
   return (
     <Wrapper {...props}>
