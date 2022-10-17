@@ -52,16 +52,12 @@ const AddNews = (props) => {
     const replaceWhiteSpace = replaceHTML.replace(/&nbsp;/g, "").trim();
 
     if (replaceWhiteSpace.length <= 0) {
-      setErrorContent("Content tidak boleh kosong");
-      return;
+      setErrorContent("Isi berita tidak boleh kosong");
     }
 
     if (title === "") {
       setErrorTitle("Judul tidak boleh kosong");
-      return;
     }
-
-    alert("SENT");
   };
 
   useEffect(() => {
@@ -115,27 +111,32 @@ const AddNews = (props) => {
         </FormControl.ErrorMessage>
       </FormControl>
       <Box mt="8">
-        <Text fontSize="md" mb="1">
-          Isi Berita
-        </Text>
-        <RichEditor
-          ref={richText}
-          onChange={richTextHandle}
-          placeholder="Tulis isi berita di sini"
-          androidHardwareAccelerationDisabled={true}
-          initialHeight={250}
-          onFocus={() => setShowToolbar(true)}
-          onBlur={() => setShowToolbar(false)}
-          style={
-            !!errorContent
-              ? {
-                  borderWidth: 0.5,
-                  borderColor: "#ef4444",
-                  borderRadius: 4,
-                }
-              : {}
-          }
-        />
+        <FormControl isInvalid={!!errorContent}>
+          <Text fontSize="md" mb="1">
+            Isi Berita
+          </Text>
+          <RichEditor
+            ref={richText}
+            onChange={richTextHandle}
+            placeholder="Tulis isi berita di sini"
+            androidHardwareAccelerationDisabled={true}
+            initialHeight={250}
+            onFocus={() => setShowToolbar(true)}
+            onBlur={() => setShowToolbar(false)}
+            style={
+              !!errorContent
+                ? {
+                    borderWidth: 0.5,
+                    borderColor: "#ef4444",
+                    borderRadius: 4,
+                  }
+                : {}
+            }
+          />
+          <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
+            {errorContent}
+          </FormControl.ErrorMessage>
+        </FormControl>
       </Box>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
