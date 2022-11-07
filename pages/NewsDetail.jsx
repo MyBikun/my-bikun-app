@@ -1,45 +1,40 @@
-import { Heading, Text, VStack } from "native-base";
-import { useEffect } from "react";
+import { Heading, Text } from "native-base";
+import { useEffect, useState } from "react";
 import Wrapper from "../components/Wrapper";
+import { fireDb } from "../firebase";
+import { secondsToDateString } from "../utils/string";
 
 const NewsDetail = ({ ...props }) => {
+  const articleRef = fireDb.collection("articles");
+  const [article, setArticle] = useState(null);
+
   useEffect(() => {
     const id = props.route.params.id;
     if (!id) {
       props.navigation.goBack();
       alert("Berita tidak ditemukan");
+    } else {
+      articleRef
+        .doc(id)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            setArticle(doc.data());
+          } else {
+            props.navigation.goBack();
+            alert("Berita tidak ditemukan");
+          }
+        });
     }
   }, [props.route.params.id]);
 
   return (
     <Wrapper {...props}>
-      <Heading>
-        Judul Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro,
-        quo.
-      </Heading>
+      <Heading>{article?.title}</Heading>
       <Text color="gray.400" fontSize="md" mt="2">
-        1 Januari 2021
+        {secondsToDateString(article?.createdAt?.seconds)}
       </Text>
-      <VStack mt="4">
-        <Text fontSize="md">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam
-          incidunt fuga cupiditate tenetur tempora fugit architecto, voluptate
-          consectetur at maxime possimus aut, illo, facere iusto? Porro nisi
-          iure quam minus!
-        </Text>
-        <Text fontSize="md">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam
-          incidunt fuga cupiditate tenetur tempora fugit architecto, voluptate
-          consectetur at maxime possimus aut, illo, facere iusto? Porro nisi
-          iure quam minus!
-        </Text>
-        <Text fontSize="md">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam
-          incidunt fuga cupiditate tenetur tempora fugit architecto, voluptate
-          consectetur at maxime possimus aut, illo, facere iusto? Porro nisi
-          iure quam minus!
-        </Text>
-      </VStack>
+      <Text mt="4">{article?.content}</Text>
     </Wrapper>
   );
 };
