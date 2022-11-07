@@ -78,7 +78,7 @@ const Home = (props) => {
       </Flex>
       <VStack space="2" mt="4">
         {articles.map((article) => (
-          <NewsCard key={article.id} article={article} />
+          <NewsCard {...props} key={article.id} article={article} />
         ))}
       </VStack>
     </Wrapper>
