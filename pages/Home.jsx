@@ -56,14 +56,6 @@ const Home = (props) => {
         justifyContent="space-between"
       >
         <Heading color="yellow.500">Berita</Heading>
-        <Button
-          backgroundColor="darkBlue.50"
-          onPress={() => props.navigation.push("News")}
-        >
-          <Text fontWeight="medium" color="darkBlue.600">
-            Lebih Banyak
-          </Text>
-        </Button>
       </Flex>
       <VStack space="2" mt="4">
         <NewsCard id="1" {...props} />

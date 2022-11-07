@@ -12,7 +12,6 @@ import BikunMaps from "./pages/BikunMaps";
 import Home from "./pages/Home";
 import InitialLoadingPage from "./pages/InitialLoadingPage";
 import LogIn from "./pages/LogIn";
-import News from "./pages/News";
 import NewsDetail from "./pages/NewsDetail";
 import ShareBikunLocation from "./pages/ShareBikunLocation";
 import ShareBikunLocationMaps from "./pages/ShareBikunLocationMaps";
@@ -112,11 +111,6 @@ export default function App() {
               initialRouteName="Drawer"
             >
               <Stack.Screen name="Drawer" component={DrawerScreens} />
-              <Stack.Screen
-                name="News"
-                component={News}
-                initialParams={{ title: "Berita" }}
-              />
               <Stack.Screen
                 name="NewsDetail"
                 component={NewsDetail}
