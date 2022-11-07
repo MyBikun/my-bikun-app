@@ -1,16 +1,35 @@
 import { Entypo } from "@expo/vector-icons";
 import { Box, Button, Card, Flex, Heading, Text, VStack } from "native-base";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
 import NewsCard from "../components/NewsCard";
 import Wrapper from "../components/Wrapper";
 import { ROLE } from "../constants";
 import { AuthContext } from "../contexts/AuthContext";
+import { fireDb } from "../firebase";
 
 const Home = (props) => {
   const [jalur, setJalur] = useState("");
+  const [articles, setArticles] = useState([]);
 
   const { role } = useContext(AuthContext);
+
+  const articleRef = fireDb.collection("articles");
+
+  useEffect(() => {
+    const unsubscribe = articleRef
+      .orderBy("createdAt", "desc")
+      .onSnapshot((querySnapshot) => {
+        const newArticles = [];
+        querySnapshot.forEach((doc) => {
+          const article = doc.data();
+          article.id = doc.id;
+          newArticles.push(article);
+        });
+        setArticles(newArticles);
+      });
+    return () => unsubscribe();
+  }, []);
 
   return (
     <Wrapper {...props}>
@@ -58,12 +77,9 @@ const Home = (props) => {
         <Heading color="yellow.500">Berita</Heading>
       </Flex>
       <VStack space="2" mt="4">
-        <NewsCard id="1" {...props} />
-        <NewsCard id="1" {...props} />
-        <NewsCard id="1" {...props} />
-        <NewsCard id="1" {...props} />
-        <NewsCard id="1" {...props} />
-        <NewsCard id="1" {...props} />
+        {articles.map((article) => (
+          <NewsCard key={article.id} article={article} />
+        ))}
       </VStack>
     </Wrapper>
   );
