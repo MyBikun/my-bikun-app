@@ -1,6 +1,6 @@
 import { Box, Text } from "native-base";
 import { Pressable } from "react-native";
-import { secondsToDateString } from "../utils/string";
+import { removeHTMLTagFromString, secondsToDateString } from "../utils/string";
 
 const NewsCard = ({ article, ...props }) => {
   return (
@@ -14,8 +14,8 @@ const NewsCard = ({ article, ...props }) => {
         <Text color="gray.400" fontSize="sm">
           {secondsToDateString(article.createdAt.seconds)}
         </Text>
-        <Text isTruncated noOfLines={3} mt="2" fontSize="sm">
-          {article.content}
+        <Text isTruncated noOfLines={2} mt="2" fontSize="sm">
+          {removeHTMLTagFromString(article.content)}
         </Text>
       </Box>
     </Pressable>

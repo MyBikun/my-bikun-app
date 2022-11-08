@@ -15,9 +15,11 @@ import {
   RichToolbar,
 } from "react-native-pell-rich-editor";
 import Wrapper from "../components/Wrapper";
+import { fireDb } from "../firebase";
 
 const AddNews = (props) => {
   const richText = useRef();
+  const articleRef = fireDb.collection("articles");
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -57,6 +59,23 @@ const AddNews = (props) => {
 
     if (title === "") {
       setErrorTitle("Judul tidak boleh kosong");
+    }
+
+    // Create new article
+    if (title !== "" && replaceWhiteSpace.length > 0) {
+      articleRef
+        .add({
+          title,
+          content,
+          createdAt: new Date(),
+        })
+        .then(() => {
+          setTitle("");
+          setContent("");
+          setErrorTitle("");
+          setErrorContent("");
+          props.navigation.navigate("Home");
+        });
     }
   };
 

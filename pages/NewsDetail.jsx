@@ -1,5 +1,7 @@
 import { Heading, Text } from "native-base";
 import { useEffect, useState } from "react";
+import { useWindowDimensions } from "react-native";
+import RenderHtml from "react-native-render-html";
 import Wrapper from "../components/Wrapper";
 import { fireDb } from "../firebase";
 import { secondsToDateString } from "../utils/string";
@@ -28,13 +30,15 @@ const NewsDetail = ({ ...props }) => {
     }
   }, [props.route.params.id]);
 
+  const { width } = useWindowDimensions();
+
   return (
     <Wrapper {...props}>
       <Heading>{article?.title}</Heading>
       <Text color="gray.400" fontSize="md" mt="2">
         {secondsToDateString(article?.createdAt?.seconds)}
       </Text>
-      <Text mt="4">{article?.content}</Text>
+      <RenderHtml contentWidth={width} source={{ html: article?.content }} />
     </Wrapper>
   );
 };
