@@ -11,6 +11,7 @@ import { useContext, useState } from "react";
 import Wrapper from "../components/Wrapper";
 import { ROLE } from "../constants";
 import { AuthContext } from "../contexts/AuthContext";
+import { auth } from "../firebase";
 
 const LogInButton = ({ onPress }) => {
   return (
@@ -36,7 +37,7 @@ const LogIn = ({ ...props }) => {
 
   const authContext = useContext(AuthContext);
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     username === ""
       ? setErrorUsername("Username tidak boleh kosong")
       : setErrorUsername("");
@@ -45,12 +46,19 @@ const LogIn = ({ ...props }) => {
       : setErrorPassword("");
 
     if (username !== "" && password !== "") {
-      if (username === "admin") {
-        authContext.setRole(ROLE.ADMIN);
-      } else {
-        authContext.setRole(ROLE.DRIVER);
-      }
-      props.navigation.navigate("Home");
+      auth
+        .signInWithEmailAndPassword(username, password)
+        .then(() => {
+          if (username.includes("admin")) {
+            authContext.setRole(ROLE.ADMIN);
+          } else if (username.includes("driver")) {
+            authContext.setRole(ROLE.DRIVER);
+          }
+          props.navigation.navigate("Home");
+        })
+        .catch(() => {
+          setErrorUsername("Username atau password salah");
+        });
     }
   };
 
