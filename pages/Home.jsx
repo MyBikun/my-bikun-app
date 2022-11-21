@@ -1,7 +1,14 @@
-import { Entypo } from "@expo/vector-icons";
-import { Box, Button, Card, Flex, Heading, Text, VStack } from "native-base";
+import {
+  Button,
+  Card,
+  CheckIcon,
+  Flex,
+  Heading,
+  Select,
+  Text,
+  VStack,
+} from "native-base";
 import { useContext, useEffect, useState } from "react";
-import RNPickerSelect from "react-native-picker-select";
 import NewsCard from "../components/NewsCard";
 import Wrapper from "../components/Wrapper";
 import { ROLE } from "../constants";
@@ -40,24 +47,21 @@ const Home = (props) => {
       </Heading>
       <Heading color="yellow.500">Lacak Bikun</Heading>
       <Card backgroundColor="white" mt="4">
-        <Box borderWidth="1" borderColor="muted.300" rounded="sm" p="3">
-          <RNPickerSelect
-            onValueChange={(value) => setJalur(value)}
-            placeholder={{
-              label: "Pilih Jalur",
-              value: null,
-              color: "#A3A3A3",
-            }}
-            Icon={() => (
-              <Entypo name="chevron-down" size={16} color="#D4D4D4" />
-            )}
-            value={jalur}
-            items={[
-              { label: "Jalur Lurus", value: "JalurLurus", color: "#000000" },
-              { label: "Jalur Belok", value: "JalurBelok" },
-            ]}
-          />
-        </Box>
+        <Select
+          selectedValue={jalur}
+          minWidth="200"
+          accessibilityLabel="Pilih Jalur"
+          placeholder="Pilih Jalur"
+          _selectedItem={{
+            bg: "yellow.500",
+            endIcon: <CheckIcon size="5" />,
+          }}
+          mt={1}
+          onValueChange={(jalur) => setJalur(jalur)}
+        >
+          <Select.Item label="Jalur Lurus" value="JalurLurus" />
+          <Select.Item label="Jalur Belok" value="JalurBelok" />
+        </Select>
         <Button
           backgroundColor="yellow.500"
           mt="4"
