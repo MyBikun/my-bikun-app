@@ -1,7 +1,6 @@
-import { Entypo, Ionicons } from "@expo/vector-icons";
-import { Box, Button, Flex, Text } from "native-base";
+import { Ionicons } from "@expo/vector-icons";
+import { Box, Button, CheckIcon, Flex, Select, Text } from "native-base";
 import { useState } from "react";
-import RNPickerSelect from "react-native-picker-select";
 import Wrapper from "../components/Wrapper";
 
 const ShareBikunLocation = (props) => {
@@ -44,20 +43,21 @@ const ShareBikunLocation = (props) => {
         backgroundColor="white"
         mt="4"
       >
-        <RNPickerSelect
-          onValueChange={(value) => setJalur(value)}
-          placeholder={{
-            label: "Pilih Jalur",
-            value: null,
-            color: "#A3A3A3",
+        <Select
+          selectedValue={jalur}
+          minWidth="200"
+          accessibilityLabel="Pilih Jalur"
+          placeholder="Pilih Jalur"
+          _selectedItem={{
+            bg: "yellow.500",
+            endIcon: <CheckIcon size="5" />,
           }}
-          Icon={() => <Entypo name="chevron-down" size={16} color="#D4D4D4" />}
-          value={jalur}
-          items={[
-            { label: "Jalur Lurus", value: "JalurLurus", color: "#000000" },
-            { label: "Jalur Belok", value: "JalurBelok" },
-          ]}
-        />
+          mt={1}
+          onValueChange={(jalur) => setJalur(jalur)}
+        >
+          <Select.Item label="Jalur Lurus" value="JalurLurus" />
+          <Select.Item label="Jalur Belok" value="JalurBelok" />
+        </Select>
       </Box>
     </Wrapper>
   );
