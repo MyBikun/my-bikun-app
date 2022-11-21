@@ -1,8 +1,11 @@
 import { Ionicons } from "@expo/vector-icons";
+import * as Location from 'expo-location';
 import { Box, Button, Flex, Text } from "native-base";
+import { useEffect, useState } from "react";
 import { Dimensions } from "react-native";
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import Wrapper from "../components/Wrapper";
+import { fireDb } from "../firebase";
 
 const ChangeRouteButton = ({ navigation }) => {
   return (
@@ -21,6 +24,34 @@ const ChangeRouteButton = ({ navigation }) => {
 };
 
 const ShareBikunLocationMaps = (props) => {
+  const [error, setError] = useState(null);
+  const [coordinate, setCoordinate] = useState(null);
+
+  useEffect(() => {
+    Location.watchPositionAsync({
+      enableHighAccuracy: true,
+    }, location => {
+      if (location?.coords?.latitude && location?.coords?.longitude) {
+        fireDb.collection('vehicles')
+        .doc('LEFokHI3OxlWyRsrcXcV')
+        .update({
+          'currentPosition': {
+            latitude: location?.coords?.latitude,
+            longitude: location?.coords?.longitude
+          }
+        })
+        .then(() => {
+          console.log(coordinate);
+        })
+      }
+    })
+  }, []);
+
+  if (coordinate) {
+    console.log(coordinate);
+  }
+
+  
   return (
     <Wrapper
       noPadding
@@ -52,7 +83,9 @@ const ShareBikunLocationMaps = (props) => {
           width: "100%",
           height: Dimensions.get("window").height,
         }}
-      />
+      >
+        {(coordinate?.latitude || coordinate?.longitude) && <Marker coordinate={coordinate} />}
+      </MapView>
     </Wrapper>
   );
 };
