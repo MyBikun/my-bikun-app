@@ -7,6 +7,17 @@ import MapView, { Marker } from "react-native-maps";
 import Wrapper from "../components/Wrapper";
 import { fireDb } from "../firebase";
 
+const stopSharing = (navigation) => {
+  fireDb.collection('vehicles')
+        .doc('LEFokHI3OxlWyRsrcXcV')
+        .update({
+          isActive: false
+        })
+        .then(() => {
+          navigation.goBack();
+        })
+};
+
 const ChangeRouteButton = ({ navigation }) => {
   return (
     <Button
@@ -14,7 +25,7 @@ const ChangeRouteButton = ({ navigation }) => {
       mx="4"
       mb="8"
       shadow="4"
-      onPress={navigation.goBack}
+      onPress={stopSharing(navigation)}
     >
       <Text fontSize="md" fontWeight="medium" color="white">
         Berhenti Mengendarai

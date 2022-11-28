@@ -6,7 +6,7 @@ import {
   Heading,
   Select,
   Text,
-  VStack,
+  VStack
 } from "native-base";
 import { useContext, useEffect, useState } from "react";
 import NewsCard from "../components/NewsCard";
@@ -59,13 +59,13 @@ const Home = (props) => {
           mt={1}
           onValueChange={(jalur) => setJalur(jalur)}
         >
-          <Select.Item label="Jalur Lurus" value="JalurLurus" />
-          <Select.Item label="Jalur Belok" value="JalurBelok" />
+          <Select.Item label="Jalur Lurus" value="RED" />
+          <Select.Item label="Jalur Belok" value="BLUE" />
         </Select>
         <Button
           backgroundColor="yellow.500"
           mt="4"
-          onPress={() => props.navigation.push("BikunMaps")}
+          onPress={() => props.navigation.push("BikunMaps", {laneId: jalur})}
         >
           <Text fontWeight="medium" fontSize="md" color="white">
             Lacak

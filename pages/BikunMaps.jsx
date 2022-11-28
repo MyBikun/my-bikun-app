@@ -21,16 +21,17 @@ const ChangeRouteButton = ({ navigation }) => {
   );
 };
 
-const BikunMaps = (props) => {
+const BikunMaps = ({navigation, route}) => {
   const [stations, setStations] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const {laneId} = route.params;
 
   const [vehicles, setVehicles] = useState([]);
 
   useEffect(() => {
       let res = [];
-      fireDb.collection('stations').where('laneId', '==', 'BLUE')
+      fireDb.collection('stations').where('laneId', '==', laneId)
       .get().then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
           res.push(documentSnapshot.data());
@@ -39,7 +40,7 @@ const BikunMaps = (props) => {
         setIsLoading(false);
       })
       
-      const subscriber = fireDb.collection('vehicles')
+      const subscriber = fireDb.collection('vehicles').where('isActive', '==', true)
       .onSnapshot(querySnapshot => {
         let vehiclesRes = [];
         querySnapshot.forEach(documentSnapshot => {
