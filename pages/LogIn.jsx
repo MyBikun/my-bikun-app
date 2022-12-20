@@ -5,7 +5,7 @@ import {
   Input,
   Text,
   VStack,
-  WarningOutlineIcon,
+  WarningOutlineIcon
 } from "native-base";
 import { useContext, useState } from "react";
 import Wrapper from "../components/Wrapper";
@@ -54,6 +54,7 @@ const LogIn = ({ ...props }) => {
           } else if (username.includes("driver")) {
             authContext.setRole(ROLE.DRIVER);
           }
+          authContext.setEmail(username);
           props.navigation.navigate("Home");
         })
         .catch(() => {

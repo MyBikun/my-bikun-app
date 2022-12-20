@@ -5,6 +5,7 @@ export const AuthContext = createContext(undefined);
 
 export const AuthContextProvider = (props) => {
   const [role, setRole] = useState(null);
+  const [email, setEmail] = useState(null);
 
   const setRoleOnSecureStorage = (role) => {
     setRole(role);
@@ -22,6 +23,8 @@ export const AuthContextProvider = (props) => {
   const AuthContextObject = {
     role,
     setRole,
+    email,
+    setEmail
   };
 
   return (

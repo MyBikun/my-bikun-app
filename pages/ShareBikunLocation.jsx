@@ -1,10 +1,27 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Box, Button, CheckIcon, Flex, Select, Text } from "native-base";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Wrapper from "../components/Wrapper";
+import { AuthContext } from "../contexts/AuthContext";
+import { fireDb } from "../firebase";
 
 const ShareBikunLocation = (props) => {
   const [jalur, setJalur] = useState("");
+  const { email } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(true);
+  const [vehicleId, setVehicleId] = useState('');
+
+  useEffect(() => {
+    fireDb.collection('users').where('email', '==', email)
+    .get().then(querySnapshot => {
+      querySnapshot.forEach(documentSnapshot => {
+        console.log('woit');
+        console.log(documentSnapshot);
+      })
+      console.log(vehicleId);
+      setIsLoading(false);
+    })
+  });
 
   return (
     <Wrapper
