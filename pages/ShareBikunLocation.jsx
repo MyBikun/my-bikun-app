@@ -12,14 +12,11 @@ const ShareBikunLocation = (props) => {
   const [vehicleId, setVehicleId] = useState('');
 
   useEffect(() => {
-    fireDb.collection('users').where('email', '==', email)
-    .get().then(querySnapshot => {
+    fireDb.collection('users').where('email', '==', email).get()
+    .then(querySnapshot => {
       querySnapshot.forEach(documentSnapshot => {
-        console.log('woit');
-        console.log(documentSnapshot);
+        setVehicleId(documentSnapshot.data().vehicleId);
       })
-      console.log(vehicleId);
-      setIsLoading(false);
     })
   });
 
@@ -32,7 +29,7 @@ const ShareBikunLocation = (props) => {
           shadow="4"
           mx="8"
           mb="8"
-          onPress={() => props.navigation.push("ShareBikunLocationMaps")}
+          onPress={() => props.navigation.push("ShareBikunLocationMaps", {laneId: jalur, vehicleId: vehicleId})}
         >
           <Text fontSize="md" fontWeight="medium" color="white">
             Bagikan Lokasi
@@ -72,8 +69,8 @@ const ShareBikunLocation = (props) => {
           mt={1}
           onValueChange={(jalur) => setJalur(jalur)}
         >
-          <Select.Item label="Jalur Lurus" value="JalurLurus" />
-          <Select.Item label="Jalur Belok" value="JalurBelok" />
+          <Select.Item label="Jalur Lurus" value="RED" />
+          <Select.Item label="Jalur Belok" value="BLUE" />
         </Select>
       </Box>
     </Wrapper>
