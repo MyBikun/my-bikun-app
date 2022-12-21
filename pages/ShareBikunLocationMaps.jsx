@@ -41,27 +41,27 @@ const ShareBikunLocationMaps = (props) => {
   const {laneId, vehicleId} = props.route.params;
 
   useEffect(() => {
-    
-  BackHandler.addEventListener("hardwareBackPress", () => stopSharing(props, true));
+    Location.requestForegroundPermissionsAsync();
+    BackHandler.addEventListener("hardwareBackPress", () => stopSharing(props, true));
 
-  Location.watchPositionAsync({
-      enableHighAccuracy: true,
-    }, location => {
-      if (location?.coords?.latitude && location?.coords?.longitude) {
-        fireDb.collection('vehicles')
-        .doc(vehicleId.trim())
-        .update({
-          'currentPosition': {
-            latitude: location?.coords?.latitude,
-            longitude: location?.coords?.longitude
-          },
-          isActive: true,
-          currentLane: laneId
-        })
-        .then(() => {
-        })
-      }
-    })
+    Location.watchPositionAsync({
+        enableHighAccuracy: true,
+      }, location => {
+        if (location?.coords?.latitude && location?.coords?.longitude) {
+          fireDb.collection('vehicles')
+          .doc(vehicleId.trim())
+          .update({
+            'currentPosition': {
+              latitude: location?.coords?.latitude,
+              longitude: location?.coords?.longitude
+            },
+            isActive: true,
+            currentLane: laneId
+          })
+          .then(() => {
+          })
+        }
+      })
   }, []);
   
   return (

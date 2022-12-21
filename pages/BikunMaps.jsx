@@ -31,7 +31,7 @@ const BikunMaps = ({...props}) => {
 
   useEffect(() => {
       let res = [];
-      fireDb.collection('stations').where('laneId', '==', 'BLUE')
+      fireDb.collection('stations').where('laneId', '==', laneId.trim())
       .get().then(querySnapshot => {
         querySnapshot.forEach(documentSnapshot => {
           res.push(documentSnapshot.data());

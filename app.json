@@ -1,6 +1,6 @@
 {
   "expo": {
-    "owner": "ganiirsyadi",
+    "owner": "samuelmjn",
     "name": "my-bikun-app",
     "slug": "my-bikun-app",
     "version": "1.0.0",
@@ -53,7 +53,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "22a94402-7727-4e5e-abcd-bf19f832c429"
+        "projectId": "d5622ea3-05ee-4dd1-bf9e-d13a284fb427"
       }
     }
   }
